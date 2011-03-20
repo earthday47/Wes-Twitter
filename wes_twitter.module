@@ -1,0 +1,6 @@
+<?php
+/**
+ * @file
+ * This module displays a Twitter feed in a block, and also has basic
+ * authentication.
+ */
