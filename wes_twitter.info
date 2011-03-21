@@ -2,3 +2,4 @@ name = Twitter Feed
 description = "Displays recent Twitter feeds in a block."
 core = 7.x
 package = Wes
+configure = admin/structure/block/manage/wes_twitter/twitter/configure

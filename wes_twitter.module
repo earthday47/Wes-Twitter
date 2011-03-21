@@ -1,6 +1,67 @@
 <?php
 /**
  * @file
- * This module displays a Twitter feed in a block, and also has basic
- * authentication.
+ * This module displays a recent Tweet in a block, given a username.
  */
+
+/**
+ * Implements hook_block_info().
+ */
+function wes_twitter_block_info() {
+  $blocks['twitter'] = array(
+    'info' => t('Wes Twitter'),
+    'status' => TRUE,
+    'region' => 'sidebar_second',
+    'visibility' => 1,
+  );
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_configure().
+ */
+function wes_twitter_block_configure($delta = '') {
+  $form = array();
+  if ($delta == 'twitter') {
+    $form['wes_twitter_username'] = array(
+      '#type' => 'textfield',
+      '#title' => 'Twitter Username',
+      '#size' => 20,
+      '#description' => t('Used to query search.twitter.com. Do not include @.'),
+      '#default_value' => variable_get('wes_twitter_username', ''),
+    );
+  }
+  return $form;
+}
+
+/**
+ * Implements hook_block_save().
+ */
+function wes_twitter_block_save($delta = '', $edit = array()) {
+  if ($delta == 'twitter') {
+    variable_set('wes_twitter_username', $edit['wes_twitter_username']);
+  }
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function wes_twitter_block_view($delta = '') {
+  switch ($delta) {
+    case 'twitter':
+      // partly lifted from ninesixtyrobots/template.php    
+      $twitter_username = variable_get('wes_twitter_username', '');
+      if ($twitter_username) {
+        // query search.twitter.com; return tweets from the given user
+        $response = drupal_http_request('http://search.twitter.com/search.json?q=from:' . $twitter_username);
+        $data = json_decode($response->data);
+        if (!empty($data->results)) {
+          // take first tweet
+          $tweet = $data->results[0]->text;
+          $block['content'] = $tweet;
+        }
+      }
+      break;
+  }
+  return $block;
+}
