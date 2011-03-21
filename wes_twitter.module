@@ -10,6 +10,7 @@
 function wes_twitter_block_info() {
   $blocks['twitter'] = array(
     'info' => t('Wes Twitter'),
+    'cache' => DRUPAL_CACHE_PER_PAGE,
     'status' => TRUE,
     'region' => 'sidebar_second',
     'visibility' => 1,
