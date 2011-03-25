@@ -59,10 +59,20 @@ function wes_twitter_block_view($delta = '') {
         if (!empty($data->results)) {
           // take first tweet
           $tweet = $data->results[0]->text;
-          $block['content'] = $tweet;
+          $block['subject'] = l('@' . $twitter_username, 'http://twitter.com/' . $twitter_username);
+          $block['content'] = _wes_twitter_block_contents($tweet);
         }
       }
       break;
   }
   return $block;
+}
+
+/**
+ * Custom block content function.
+ *
+ * @see wes_twitter_block_view()
+ */
+function _wes_twitter_block_contents($tweet) {
+  return array('#markup' => $tweet);
 }
