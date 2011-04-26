@@ -52,6 +52,7 @@ function wes_twitter_block_save($delta = '', $edit = array()) {
  * Implements hook_block_view().
  */
 function wes_twitter_block_view($delta = '') {
+  $block = array();
   switch ($delta) {
     case 'twitter':
       // partly lifted from ninesixtyrobots/template.php    
@@ -78,5 +79,7 @@ function wes_twitter_block_view($delta = '') {
  * @see wes_twitter_block_view()
  */
 function _wes_twitter_block_contents($tweet) {
-  return array('#markup' => $tweet);
+  return array(
+    '#markup' => $tweet
+  );
 }
