@@ -105,6 +105,7 @@ function wes_twitter_block_view($delta = '') {
       $nid = $result->nid;
       if ($nid) {
         $node = node_load($nid);
+        $twitter_username = variable_get('wes_twitter_username', '');
         $block['subject'] = l('@' . $twitter_username, 'http://twitter.com/' . $twitter_username);
         $block['content'] = _wes_twitter_block_contents($node->title);
       }
