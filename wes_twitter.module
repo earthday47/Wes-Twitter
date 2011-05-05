@@ -101,7 +101,7 @@ function wes_twitter_block_view($delta = '') {
       break;
     case 'twitter_feed':
       $node_type = variable_get('wes_twitter_nodetype', '');
-      $result = db_query('SELECT nid FROM {node} WHERE type = :type AND status = 1 LIMIT 1', array(':type' => $node_type))->fetchObject();
+      $result = db_query('SELECT nid FROM {node} WHERE type = :type AND status = 1 ORDER BY created DESC LIMIT 1', array(':type' => $node_type))->fetchObject();
       $nid = $result->nid;
       if ($nid) {
         $node = node_load($nid);
